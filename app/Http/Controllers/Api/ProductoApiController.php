@@ -1,53 +1,75 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Producto\validacionesRequest;
+use App\Models\Producto;
+use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable
+class ProductoApiController extends Controller
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
-
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
-
-    protected $appends = [
-        'profile_photo_url',
-    ];
-
-    protected function casts(): array
+    public function index()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        $user = auth()->user();
+        $productos = $user->isAdmin()
+            ? Producto::all()
+            : Producto::where('user_id', $user->id)->get();
+
+        return response()->json($productos);
     }
 
-    /**
-     * 🔐 Verifica si el usuario es administrador
-     */
-    public function isAdmin(): bool
+    public function store(validacionesRequest $request)
     {
-        return $this->role === 'admin';
+        $imagenPath = $request->file('imagen')?->store('public/imagenes');
+
+        $producto = Producto::create([
+            'nombre'    => $request->nombre,
+            'categoria' => $request->categoria,
+            'precio'    => $request->precio,
+            'stock'     => $request->stock,
+            'user_id'   => auth()->id(),
+            'imagen'    => $imagenPath,
+        ]);
+
+        return response()->json($producto, 201);
+    }
+
+    public function update(validacionesRequest $request, Producto $producto)
+    {
+        if (!auth()->user()->isAdmin() && $producto->user_id !== auth()->id()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
+        if ($request->hasFile('imagen')) {
+            if ($producto->imagen) {
+                Storage::delete($producto->imagen);
+            }
+            $producto->imagen = $request->file('imagen')->store('public/imagenes');
+        }
+
+        $producto->update([
+            'nombre'    => $request->nombre,
+            'categoria' => $request->categoria,
+            'precio'    => $request->precio,
+            'stock'     => $request->stock,
+        ]);
+
+        return response()->json($producto);
+    }
+
+    public function destroy(Producto $producto)
+    {
+        if (!auth()->user()->isAdmin() && $producto->user_id !== auth()->id()) {
+            return response()->json(['error' => 'No autorizado'], 403);
+        }
+
+        if ($producto->imagen) {
+            Storage::delete($producto->imagen);
+        }
+
+        $producto->delete();
+
+        return response()->json(['message' => 'Producto eliminado']);
     }
 }

@@ -18,7 +18,7 @@
 
         <!-- BODY -->
         <form method="POST"
-            action="{{ route('productos.store') }}"
+            id="createProductoForm"
             enctype="multipart/form-data">
             @csrf
 
@@ -102,4 +102,6 @@
             </div>
         </form>
     </div>
+  
+
 </div>

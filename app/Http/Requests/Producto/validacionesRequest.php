@@ -26,6 +26,7 @@ class validacionesRequest extends FormRequest
             'categoria' => 'required|string|max:255',
             'precio'    => 'required|numeric|min:0',
             'stock'     => 'required|integer|min:0',
+            'imagen'    => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }

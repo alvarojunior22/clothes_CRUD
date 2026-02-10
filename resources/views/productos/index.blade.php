@@ -15,7 +15,7 @@
     </button>
 </div>
 
-<div class="bg-white shadow-sm rounded-xl overflow-hidden border border-gray-200">
+<div class="bg-white shadow-sm rounded-xl overflow-hidden border border-gray-200" id="app">
     <table class="min-w-full text-sm text-gray-700">
         <thead class="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
             <tr>
