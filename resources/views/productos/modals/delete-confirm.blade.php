@@ -10,19 +10,16 @@
       </div>
     </div>
 
-    <!-- TITLE -->
     <h3 class="text-lg font-semibold text-gray-800 text-center mb-2">
       ¿Eliminar producto?
     </h3>
 
-    <!-- TEXT -->
     <p class="text-sm text-gray-600 text-center mb-6">
       Esta acción <strong>no se puede deshacer</strong>.
       ¿Seguro que deseas eliminar
       <span id="deleteProductName" class="font-medium"></span>?
     </p>
 
-    <!-- ACTIONS -->
     <div class="flex justify-center gap-4">
       <button
         type="button"
@@ -31,10 +28,8 @@
         Cancelar
       </button>
 
-      <form id="deleteForm" method="POST">
+      <form id="deleteForm">
         @csrf
-        @method('DELETE')
-
         <button
           type="submit"
           class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">

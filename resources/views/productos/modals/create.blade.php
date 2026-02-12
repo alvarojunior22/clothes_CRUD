@@ -10,7 +10,8 @@
                 Nuevo Producto
             </h3>
 
-            <button onclick="closeCreateModal()"
+            <button type="button"
+                onclick="closeCreateModal()"
                 class="text-gray-400 hover:text-gray-600 text-2xl">
                 &times;
             </button>
@@ -95,6 +96,7 @@
                     Cancelar
                 </button>
 
+
                 <button type="submit"
                     class="btn-primary">
                     Guardar
@@ -102,6 +104,6 @@
             </div>
         </form>
     </div>
-  
+
 
 </div>

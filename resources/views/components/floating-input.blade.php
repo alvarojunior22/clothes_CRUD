@@ -21,7 +21,7 @@
             rounded-lg
             px-4
             pt-6
-            pb-2
+            pb-4
             text-gray-900
             shadow-sm
 

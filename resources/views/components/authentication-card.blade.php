@@ -1,9 +1,24 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <div>
-        {{ $logo }}
-    </div>
+<div class="h-screen flex items-center justify-center bg-cover bg-center">
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        {{ $slot }}
+
+    <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex">
+
+        <!-- LADO IZQUIERDO (Branding) -->
+        <div class="hidden md:flex md:w-1/2 relative">
+
+            <!-- Imagen -->
+            <img src="{{ asset('storage/crud.png') }}"
+                alt="Clothes CRUD"
+                class="absolute inset-0 w-full h-full object-cover">
+
+            <!-- Overlay oscuro -->
+            <div class="absolute inset-0 bg-black/20"></div>
+            </div>
+            <!-- LADO DERECHO (Formulario) -->
+            <div class="w-full md:w-1/2 p-12">
+                {{ $slot }}
+            </div>
+
+        </div>
+
     </div>
-</div>
