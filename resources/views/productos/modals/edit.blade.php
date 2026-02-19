@@ -10,8 +10,8 @@
                 Editar Producto
             </h3>
 
-            <button onclick="closeProductModal()"
-                class="text-gray-400 hover:text-gray-600 text-2xl">
+            <button id="closeEditModalX"
+                class=" text-gray-400 hover:text-gray-600 text-2xl">
                 &times;
             </button>
         </div>
@@ -72,7 +72,7 @@
             <!-- FOOTER -->
             <div class="flex justify-end gap-4 mt-8 border-t pt-6">
                 <button type="button"
-                    onclick="closeProductModal()"
+                    id="closeEditModalBtn"
                     class="btn-secondary">
                     Cancelar
                 </button>

@@ -23,10 +23,10 @@ class validacionesRequest extends FormRequest
     {
         return [
             'nombre'    => 'required|string|max:255',
-            'categoria' => 'required|string|max:255',
+            'categoria_id' => 'required|exists:categorias,id',
             'precio'    => 'required|numeric|min:0',
             'stock'     => 'required|integer|min:0',
-            'imagen'    => 'nullable|image|max:2048'
+            'imagen'    => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048'
         ];
     }
 }

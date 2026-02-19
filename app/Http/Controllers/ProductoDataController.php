@@ -14,12 +14,15 @@ class ProductoDataController extends Controller
   {
     $user = auth()->user();
 
-    return $user->isAdmin()
-      ? Producto::with('categoria')->paginate(10)
-      : Producto::with('categoria')
-      ->where('user_id', $user->id)
-      ->get();
+    $query = Producto::with('categoria');
+
+    if (!$user->isAdmin()) {
+      $query->where('user_id', $user->id);
+    }
+
+    return $query->paginate(10);
   }
+
 
 
   public function store(ProductoRequest $request)
